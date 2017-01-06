@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Navegador</title>
+    <link rel="stylesheet" href="www/css/bootstrap.css" />
+	<!--<link rel="stylesheet" href="www/css/bootstrap-theme.min.css" />-->
+	<link rel="stylesheet" href="www/css/ng-table.min.css">
+	<link rel="stylesheet" href="www/font-awesome/css/font-awesome.min.css">
+</head>
+<body ng-app="App">
+	<h3 align="center">KimnIntranet</h3>
+	<hr></hr>
+
+	<div ng-controller="ControladorFlaps">
+		<ul class="nav nav-tabs"  id="{{data.model}}">
+			<li ng-repeat="flap in flaps" class="{{flap.order}}">
+				<a href="#{{flap.name}}" data-toggle="tab">{{flap.nameFront}}</a>
+			</li>
+		</ul>	
+		
+		<div >		
+			<div class="tab-content">
+				<div ng-repeat="tab in section" class="tab-pane" id="{{tab.grids.name}}">
+					<div class="container table-responsive">
+						<br>
+						<div>
+							<button  class="btn btn-large btn-primary" ng-click="VerRegistro(' VER ','tabla'+tab.grids.name,tab.grids.name);">
+								<i class="fa fa-eye" aria-hidden="true"> Ver </i>
+							</button>
+							<button class="btn btn-large btn-primary" ng-click="EditarRegistro(' EDITAR ','tabla'+tab.grids.name,tab.grids.name);">
+								<i class="fa fa-pencil-square-o" aria-hidden="true"> Editar </i>
+							</button>
+							<button class="btn btn-large btn-primary" ng-click="EliminarRegistro(' ELIMINAR ','tabla'+tab.grids.name,tab.grids.name);">
+								<i class="fa fa-trash-o" aria-hidden="true"> Eliminar </i>
+							</button>
+						</div>
+						<br>
+						
+						<table id="tabla{{tab.grids.name}}" class='table table-bordered table-hover'>
+							<thead>
+								<tr>
+									<th ng-repeat="head in tab.grids.gridHead" >{{head.name}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr onclick="clickOnRow(this);" ng-repeat="rows in tab.grids.gridData" ng-click="SeleccionaReg(tab.grids.name,this);">
+									<td ng-repeat="row in rows.row" >{{row.value}}</td>
+								</tr>
+							</tbody>
+						</table>
+						
+						<div>
+							<ul class="nav nav-tabs"  id="{{data.model}}">
+								<li ng-repeat="sub in tab.subflaps.sub" class="{{sub.order}}">
+									<a href="#{{tab.grids.name}}{{sub.name}}" data-toggle="tab">{{sub.name}}</a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div ng-repeat="sub in tab.subflaps.sub" class="tab-pane" id="{{tab.grids.name}}{{sub.name}}">
+									<h3>{{tab.grids.name}}{{sub.name}}</h3>
+									<table ng-table="tableParams">
+										<tr>
+											<td><p>Nombre : </p></td>
+											<td><input type="text" value="{{sub.nombre}}" readonly="readonly"/></td>
+										</tr>
+										<tr>
+											<td><p>Apellido : </p></td>
+											<td><input type="text" value="{{sub.apellido}}" readonly="readonly"/></td>
+										</tr>
+										<tr>
+											<td><p>Direccion : </p></td>
+											<td><input type="text" value="{{sub.direccion}}" readonly="readonly"/></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>		 
+	</div>
+    <script src="www/js/jquery-2.0.3.min.js"></script>
+	<script src="www/js/bootstrap.min.js"></script>
+    <script src="www/js/angular.min.js"></script> 	
+	<script src="www/js/ng-table.min.js"></script>
+	<script src="www/js/utiles.js"></script>
+	<script>
+		var URL_GLOBAL = 'http://localhost:8080/paginas/KimnIntranet';
+	</script>
+	<script src="app/app.js"></script>
+</body>
+</html>
